@@ -56,9 +56,61 @@ body {
 
 .cart-widget {
   position: relative;
-  font-size: 1.5rem;
+  display: inline-block;
   cursor: pointer;
   color: var(--blanco);
+}
+
+.cart-icon {
+  font-size: 1.8rem;
+  color: #f58bb0;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #f58bb0;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.cart.dropdown {
+  position: absolute;
+  right: 0;
+  top: 2.5rem;
+  background-color: #fff;
+  border: 1px solid #f7c7db;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  width: 260px;
+  padding: 10px;
+  z-index: 10;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.cart-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.cart-dropdown li {
+  display: flex;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.cart-dropdown p {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 .cart-widget span {
@@ -70,6 +122,17 @@ body {
   font-size: 0.8rem;
   border-radius: 50%;
   padding: 2px 6px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .item-list {
