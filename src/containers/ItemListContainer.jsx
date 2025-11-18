@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import products from "../data/products";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../services/firebase";
 import ItemList from "../components/ItemList";
 
 export default function ItemDetailContainer() {
@@ -8,17 +9,31 @@ export default function ItemDetailContainer() {
   const { categoryId } = useParams();
 
   useEffect(() => {
-    const getProducts = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(
-          categoryId
-            ? products.filter((p) => p.category === categoryId)
-            : products
-        );
-      }, 500);
-    });
+    const fetchProducts = async () => {
+      try {
+        const bolsosRef = collection(db, "bolsos");
+        let q;
 
-    getProducts.then((res) => setItems(res));
+        if (categoryId) {
+          q = query(bolsosRef, where("category", "==", categoryId));
+        } else {
+          q = bolsosRef;
+        }
+
+        const querySnapshot = await getDocs(q);
+
+        const productsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setItems(productsData);
+      } catch (error) {
+        console.error("Error obteniendo los productos:", error);
+      }
+    };
+
+    fetchProducts();
   }, [categoryId]);
 
   return <ItemList items={items} />;

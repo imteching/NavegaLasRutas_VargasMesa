@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 import "../styles/styles.css";
 
 export default function CartWidget() {
@@ -21,19 +22,24 @@ export default function CartWidget() {
           {cart.length === 0 ? (
             <p>Tu carrito está vacío 🛍</p>
           ) : (
-            <ul>
-              {cart.map((item) => (
-                <li key={item.id}>
-                  <img src={item.img} alt={item.name} />
-                  <div>
-                    <p>{item.name}</p>
-                    <p>
-                      {item.quantity} × ${item.price}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <>
+              <ul>
+                {cart.map((item) => (
+                  <li key={item.id}>
+                    <img src={item.img} alt={item.name} />
+                    <div>
+                      <p>{item.name}</p>
+                      <p>
+                        {item.quantity} × ${item.price}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <Link to="/cart" className="view-cart-btn">
+                Ver carrito completo
+              </Link>
+            </>
           )}
         </div>
       )}

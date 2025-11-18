@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import products from "../data/products";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../services/firebase";
 import ItemDetail from "../components/ItemDetail";
 
 export default function ItemDetailContainer() {
@@ -8,14 +9,22 @@ export default function ItemDetailContainer() {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const getProduct = new Promise((resolve) => {
-      setTimeout(() => {
-        const found = products.find((p) => p.id === parseInt(itemId));
-        resolve(found);
-      }, 1000);
-    });
+    const fetchProduct = async () => {
+      try {
+        const ref = doc(db, "bolsos", itemId);
+        const snapshot = await getDoc(ref);
 
-    getProduct.then((res) => setProduct(res));
+        if (snapshot.exists()) {
+          setProduct({ id: snapshot.id, ...snapshot.data() });
+        } else {
+          console.log("Producto no encontrado");
+        }
+      } catch (error) {
+        console.error("Error obteniendo detalle del producto:", error);
+      }
+    };
+
+    fetchProduct();
   }, [itemId]);
   return product ? (
     <ItemDetail product={product} />
