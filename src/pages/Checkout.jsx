@@ -4,7 +4,7 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { db } from "../services/firebase";
 
 export default function Checkout() {
-  const { cart, cartQuantity, cartTotal, clearCart } = useContext(CartContext);
+  const { cart, cartQuantity, totalPrice, clearCart } = useContext(CartContext);
 
   const [buyer, setBuyer] = useState({
     name: "",
@@ -38,7 +38,7 @@ export default function Checkout() {
         quantity: item.quantity,
       })),
       date: Timestamp.now(),
-      total: cartTotal(),
+      total: totalPrice(),
     };
 
     try {
@@ -102,7 +102,7 @@ export default function Checkout() {
             ))}
           </ul>
 
-          <h3>Total: ${cartTotal()}</h3>
+          <h3>Total: ${totalPrice()}</h3>
         </div>
       </div>
     </div>

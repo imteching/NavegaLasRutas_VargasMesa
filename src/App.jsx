@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import ItemListContainer from "./containers/ItemListContainer";
 import ItemDetailContainer from "./containers/ItemDetailContainer";
 import CartPage from "./pages/CartPage";
+import Checkout from "./pages/Checkout";
 import "./styles/styles.css";
 
 function App() {
